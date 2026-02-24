@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NO</title>
+<style>
+    body {
+        margin: 0;
+        background: black;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-family: "Courier New", monospace;
+        overflow: hidden;
+    }
+
+    h1 {
+        color: red;
+        font-size: 120px;
+        text-shadow:
+            0 0 10px darkred,
+            0 0 20px red,
+            0 0 40px crimson,
+            0 0 80px darkred;
+        animation: flicker 1.5s infinite alternate;
+        user-select: none;
+        position: relative;
+        margin: 0;
+    }
+
+    @keyframes flicker {
+        0% { opacity: 1; }
+        5% { opacity: 0.7; }
+        10% { opacity: 1; }
+        15% { opacity: 0.3; }
+        20% { opacity: 1; }
+        100% { opacity: 0.9; }
+    }
+
+    @keyframes shake {
+        0% { transform: translate(0, 0); }
+        10% { transform: translate(-10px, 5px); }
+        20% { transform: translate(10px, -5px); }
+        30% { transform: translate(-10px, 5px); }
+        40% { transform: translate(10px, -5px); }
+        50% { transform: translate(-5px, 5px); }
+        60% { transform: translate(5px, -5px); }
+        70% { transform: translate(-5px, 5px); }
+        80% { transform: translate(5px, -5px); }
+        90% { transform: translate(-5px, 5px); }
+        100% { transform: translate(0, 0); }
+    }
+
+    .shake {
+        animation: shake 0.5s infinite;
+    }
+
+    iframe {
+        margin-top: 20px;
+        width: 560px;
+        height: 315px;
+        border: none;
+    }
+
+    @media (max-width: 600px) {
+        h1 { font-size: 60px; }
+        iframe { width: 90%; height: 202px; }
+    }
+</style>
+</head>
+<body>
+
+<h1 id="mainText">No</h1>
+
+<script>
+const target = document.getElementById("mainText");
+let triggered = false;
+
+const observer = new MutationObserver(function() {
+    if (triggered) return;
+    if (target.textContent.trim() !== "No") {
+        triggered = true;
+        alert("How dare you!");
+        target.classList.add("shake");
+
+        // Embed the Rickroll video
+        const iframe = document.createElement("iframe");
+        iframe.src = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1";
+        iframe.allow = "autoplay; encrypted-media";
+        document.body.appendChild(iframe);
+    }
+});
+
+observer.observe(target, {
+    childList: true,
+    characterData: true,
+    subtree: true
+});
+</script>
+
+</body>
+</html>
